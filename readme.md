@@ -1,7 +1,7 @@
 # Личный проект «Типотека» [![Build status][travis-image]][travis-url]
 
 * Студент: [Денис](https://up.htmlacademy.ru/nodejs/3/user/1399329).
-* Наставник: `Неизвестно`.
+* Наставник: Юрий Кучма.
 
 ---
 
