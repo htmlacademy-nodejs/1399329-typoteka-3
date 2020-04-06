@@ -1,6 +1,6 @@
 'use strict';
 
-const fs = require(`fs`);
+const fs = require(`fs`).promises;
 const log = require(`./console`);
 const {getRandomInt, shuffle, toJSON} = require(`./utils`);
 const {ExitCode, COMMANDS} = require(`../../constants`);
@@ -45,6 +45,16 @@ const generatePublications = (count) => {
   }));
 };
 
+const writeContentToFile = async (fileName, content) => {
+  try {
+    await fs.writeFile(fileName, content);
+    log.success(`Operation success. File created.`);
+  } catch (error) {
+    log.error(`Can't write data to file...`);
+    process.exit(ExitCode.error);
+  }
+};
+
 module.exports = {
   name: GENERATE,
   run(args) {
@@ -58,12 +68,6 @@ module.exports = {
 
     const content = toJSON(generatePublications(countPublication), {});
 
-    fs.writeFile(FILE_NAME, content, (error) => {
-      if (error) {
-        return log.error(`Can't write data to file...`);
-      }
-
-      return log.success(`Operation success. File created.`);
-    });
+    writeContentToFile(FILE_NAME, content);
   }
 };

@@ -14,6 +14,6 @@ const helperText = `
 module.exports = {
   name: HELP,
   run() {
-    log.info(helperText);
+    log.text(helperText);
   }
 };
