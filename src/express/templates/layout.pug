@@ -1,0 +1,21 @@
+include ./mixins/header
+include ./mixins/scripts
+
+block variables
+  - var isAuth = false;
+  - var isAdmin = false;
+  - var scripts = { vendor: false, main: false };
+
+doctype html
+html(lang='ru')
+  include partials/head.pug
+  body
+    .wrapper
+      +header(isAuth, isAdmin)
+
+      block content
+
+      include partials/footer.pug
+
+      if scripts
+        +scripts(scripts)
