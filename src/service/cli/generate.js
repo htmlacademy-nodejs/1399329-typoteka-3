@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
 const fs = require(`fs`).promises;
 const path = require(`path`);
-const { nanoid } = require(`nanoid`);
+const {nanoid} = require(`nanoid`);
 const log = require(`./console`);
-const { getRandomInt, shuffle, toJSON } = require(`./utils`);
-const { ExitCode, COMMANDS } = require(`../../constants`);
+const {getRandomInt, shuffle, toJSON} = require(`./utils`);
+const {ExitCode, COMMANDS} = require(`../../constants`);
 const {
   DEFAULT_COUNT,
   MAX_ANNOUNCE_COUNT,
@@ -14,7 +14,7 @@ const {
   MAX_ID_LENGTH,
   MAX_COMMENTS,
 } = require(`../../constants/generate`);
-const { validateGeneratePublications } = require(`./validation`);
+const {validateGeneratePublications} = require(`./validation`);
 
 const rootPath = process.cwd();
 const FILE_SENTENCES_PATH = path.resolve(rootPath, `./data/sentences.txt`);
@@ -22,7 +22,7 @@ const FILE_CATEGORIES_PATH = path.resolve(rootPath, `./data/categories.txt`);
 const FILE_TITLES_PATH = path.resolve(rootPath, `./data/titles.txt`);
 const FILE_COMMENTS_PATH = path.resolve(rootPath, `./data/comments.txt`);
 
-const { GENERATE } = COMMANDS;
+const {GENERATE} = COMMANDS;
 
 const getTitle = (titles) => titles[getRandomInt(0, titles.length - 1)];
 
@@ -84,12 +84,7 @@ const getContentFromFiles = async () => {
 };
 
 const generatePublications = async (count) => {
-  const {
-    sentences,
-    categories,
-    titles,
-    comments,
-  } = await getContentFromFiles();
+  const {sentences, categories, titles, comments} = await getContentFromFiles();
 
   return Array(count)
     .fill({})
