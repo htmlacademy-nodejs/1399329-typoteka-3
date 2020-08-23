@@ -14,7 +14,7 @@ const getMockData = async () => {
     const fileContent = await fs.readFile(FILE_NAME);
     data = JSON.parse(fileContent);
   } catch (err) {
-    return Promise.reject(err);
+    return [];
   }
 
   return Promise.resolve(data);
