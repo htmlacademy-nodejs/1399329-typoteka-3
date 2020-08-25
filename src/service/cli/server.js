@@ -1,13 +1,16 @@
 'use strict';
 
 const express = require(`express`);
-const log = require(`./console`);
+const {getLogger, logMessages} = require(`../logger`);
 
 const createApi = require(`../api`);
 const {COMMANDS, API_PREFIX} = require(`../../constants`);
 
+const startRequestLogger = require(`../middlewares/startRequestLogger`);
 const notFoundRouteHandler = require(`../middlewares/notFoundRouteHandler`);
 const {customErrorHandler, errorHandler} = require(`../middlewares/errors`);
+
+const logger = getLogger();
 
 const DEFAULT_PORT = 3000;
 
@@ -16,6 +19,7 @@ const createApp = async () => {
   const apiRouter = await createApi();
 
   app.use(express.json());
+  app.use(startRequestLogger);
 
   app.use(API_PREFIX, apiRouter);
 
@@ -28,6 +32,7 @@ const createApp = async () => {
 
 module.exports = {
   name: COMMANDS.SERVER,
+  createServer: createApp,
   async run(args) {
     const [customPort] = args;
     const port = Number.parseInt(customPort, 10) || DEFAULT_PORT;
@@ -35,7 +40,7 @@ module.exports = {
     const app = await createApp();
 
     app
-      .listen(port, () => log.success(`Ожидаю соединений на ${port}`))
-      .on(`error`, (error) => log.error(`Ошибка при создании сервера`, error));
+      .listen(port, () => logger.info(logMessages.getStartServer(port)))
+      .on(`error`, (error) => logger.error(logMessages.getErrorStartServer(error)));
   },
 };
